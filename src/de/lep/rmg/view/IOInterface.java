@@ -309,6 +309,27 @@ public class IOInterface {
 	 * Prints a Select-Dialog.<br>
 	 *
 	 * @param options The Options
+	 * @param message The Message which gets printed before the dialog gets printed
+	 * @param defaultV The default Value if the input is empty
+	 * @return A pointer to the options that got selected
+	 */
+	public static int getInputSelect(List<String> options, String message, int defaultV) {
+		message += "\n" + toOptionsString(options);
+		while (true) {
+			int in = getInputRange(0, options.size()-1, message, defaultV);
+			if (in >= 0 && in < options.size()) {
+				return in;
+			} else {
+				System.out.printf("Error: Your input does not match any options (%s). Try again\n",
+						toOptionsString(options));
+			}
+		}
+	}
+
+	/**
+	 * Prints a Select-Dialog.<br>
+	 *
+	 * @param options The Options
 	 * @return A pointer to the options that got selected
 	 */
 	public static int getInputSelect(List<String> options) {
@@ -358,6 +379,25 @@ public class IOInterface {
 
 	/**
 	 * Prints a Range-Dialog (Integer-Input with boundaries)
+	 *
+	 * @param message The Message to print
+	 * @param defaultV The default Value if the input is empty
+	 * @return The entered Integer
+	 */
+	public static int getInputRange(int min, int max, String message, int defaultV) {
+		while (true) {
+			int in = getInputInt(message, defaultV);
+			if (in < min || in > max) {
+				System.out.printf("Error: Your input was out of range (%d - %d). Try again\n",
+						min, max);
+			} else {
+				return in;
+			}
+		}
+	}
+
+	/**
+	 * Prints a Range-Dialog (Integer-Input with boundaries)
 	 * @param min The minimal Value
 	 * @param max The maximal Value
 	 * @return The Number which got entered
@@ -382,6 +422,24 @@ public class IOInterface {
 	public static int getInputInt(String message) {
 		while (true) {
 			String in = getInputString(message);
+			try {
+				return Integer.parseInt(in);
+			} catch (NumberFormatException e) {
+				printError("Your input has to be a number. Try again.");
+			}
+		}
+	}
+
+	/**
+	 * Prints a Number-Dialog for Integer-Numbers
+	 *
+	 * @param message The Message to print
+	 * @param defaultV The default Value if the input is empty
+	 * @return The entered Integer
+	 */
+	public static int getInputInt(String message, int defaultV) {
+		while (true) {
+			String in = getInputString(message, Integer.toString(defaultV));
 			try {
 				return Integer.parseInt(in);
 			} catch (NumberFormatException e) {
@@ -419,6 +477,18 @@ public class IOInterface {
 	/**
 	 * Prints a Yes-No-Dialog
 	 *
+	 * @param message The Message to print
+	 * @param defaultV The default Value if the input is empty
+	 * @return Yes/No
+	 */
+	public static boolean getInputBoolean(String message, boolean defaultV) {
+		String in = getInputString(message, defaultV ? boolAnswers[0] : "no");
+		return toInputBoolean(in);
+	}
+
+	/**
+	 * Prints a Yes-No-Dialog
+	 *
 	 * @return Yes/No
 	 */
 	public static boolean getInputBoolean() {
@@ -446,6 +516,24 @@ public class IOInterface {
 		System.out.println(ANSI_GREEN + "-> " + ANSI_RESET + message);
 		System.out.print(ANSI_GREEN + ">>> " + ANSI_RESET);
 		return getInputString();
+	}
+
+	/**
+	 * Print a simple Input-Dialog
+	 *
+	 * @param message The message to print
+	 * @param defaultV The default Value if the input is empty
+	 * @return The entered String
+	 */
+	public static String getInputString(String message, String defaultV) {
+		System.out.println(ANSI_GREEN + "-> " + ANSI_RESET + message);
+		System.out.print(ANSI_GREEN + ">>> " + ANSI_RESET);
+		String in = getInputString();
+		if (in.equals("")) {
+			return defaultV;
+		} else {
+			return in;
+		}
 	}
 
 	/**
