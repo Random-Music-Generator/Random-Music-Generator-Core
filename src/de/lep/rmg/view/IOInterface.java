@@ -286,17 +286,17 @@ public class IOInterface {
 	}
 
 	/**
-	 * Prints a Select-Dialog.<br>
+	 * Prints a Select-Dialog.
 	 *
 	 * @param options The Options
 	 * @param message The Message which gets printed before the dialog gets printed
 	 * @return A pointer to the options that got selected
 	 */
-	public static int getInputSelect(List<String> options, String message) {
+	public static int getInputSelect(String[] options, String message) {
 		message += "\n" + toOptionsString(options);
 		while (true) {
-			int in = getInputRange(0, options.size()-1, message);
-			if (in >= 0 && in < options.size()) {
+			int in = getInputRange(0, options.length-1, message);
+			if (in >= 0 && in < options.length) {
 				return in;
 			} else {
 				System.out.printf("Error: Your input does not match any options (%s). Try again\n",
@@ -306,18 +306,18 @@ public class IOInterface {
 	}
 
 	/**
-	 * Prints a Select-Dialog.<br>
+	 * Prints a Select-Dialog.
 	 *
 	 * @param options The Options
 	 * @param message The Message which gets printed before the dialog gets printed
 	 * @param defaultV The default Value if the input is empty
 	 * @return A pointer to the options that got selected
 	 */
-	public static int getInputSelect(List<String> options, String message, int defaultV) {
+	public static int getInputSelect(String[] options, String message, int defaultV) {
 		message += "\n" + toOptionsString(options);
 		while (true) {
-			int in = getInputRange(0, options.size()-1, message, defaultV);
-			if (in >= 0 && in < options.size()) {
+			int in = getInputRange(0, options.length-1, message, defaultV);
+			if (in >= 0 && in < options.length) {
 				return in;
 			} else {
 				System.out.printf("Error: Your input does not match any options (%s). Try again\n",
@@ -327,15 +327,15 @@ public class IOInterface {
 	}
 
 	/**
-	 * Prints a Select-Dialog.<br>
+	 * Prints a Select-Dialog.
 	 *
 	 * @param options The Options
 	 * @return A pointer to the options that got selected
 	 */
-	public static int getInputSelect(List<String> options) {
+	public static int getInputSelect(String[] options) {
 		while (true) {
-			int in = getInputRange(0, options.size()-1);
-			if (in >= 0 && in < options.size()) {
+			int in = getInputRange(0, options.length-1);
+			if (in >= 0 && in < options.length) {
 				return in;
 			} else {
 				System.out.printf("Error: Your input does not match any options (%s). Try again\n",
@@ -344,15 +344,15 @@ public class IOInterface {
 		}
 	}
 
-	private static String toOptionsString(List<String> options) {
+	private static String toOptionsString(String[] options) {
 		// See:
 		// https://stackoverflow.com/questions/599161/best-way-to-convert-an-arraylist-to-a-string
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < options.size(); i++) {
+		for (int i = 0; i < options.length; i++) {
 			sb.append("\t");
 			sb.append(i);
 			sb.append(" = ");
-			sb.append(options.get(i));
+			sb.append(options[i]);
 			sb.append("\n");
 		}
 		return sb.toString();
