@@ -526,7 +526,8 @@ public class IOInterface {
 	 * @return The entered String
 	 */
 	public static String getInputString(String message, String defaultV) {
-		System.out.println(ANSI_GREEN + "-> " + ANSI_RESET + message);
+		System.out.format("%s->%s %s (Default: %s)",
+				ANSI_GREEN, ANSI_RESET, message, defaultV);
 		System.out.print(ANSI_GREEN + ">>> " + ANSI_RESET);
 		String in = getInputString();
 		if (in.equals("")) {
