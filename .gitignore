@@ -1,7 +1,7 @@
 # Intellij
 .idea
 *.iml
-out
+/out/
 META-INF
 
 # Compiled class file
