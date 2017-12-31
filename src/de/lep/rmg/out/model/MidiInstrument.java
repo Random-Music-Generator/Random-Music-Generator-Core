@@ -19,7 +19,7 @@ public class MidiInstrument {
 							TRUMPET = 57,
 							XYLOPHONE = 14;
 
-	private static Map<Integer, String> instruments = new HashMap<>();
+	private static MidiInstrument[] instruments = null;
 
 	private String name, shortName;
 	private int midiProgram;
@@ -45,43 +45,39 @@ public class MidiInstrument {
 	}
 
 	public static MidiInstrument getInstrument(int type, float volume) {
-		Map<Integer, String> instr = getInstruments();
-		switch (type) {
-			case ACOUSTIC_BASS:
-				return new MidiInstrument(instr.get(ACOUSTIC_BASS), "Bass", type, volume);
-			case ACOUSTIC_GUITAR:
-				return new MidiInstrument(instr.get(ACOUSTIC_GUITAR), "Git", type, volume);
-			case CELLO:
-				return new MidiInstrument(instr.get(CELLO), "Cel", type, volume);
-			case FLUTE:
-				return new MidiInstrument(instr.get(FLUTE), "Flu", type, volume);
-			case ORGAN:
-				return new MidiInstrument(instr.get(ORGAN), "Org", type, volume);
-			case PIANO:
-				return new MidiInstrument(instr.get(PIANO), "Pia", type, volume);
-			case TRUMPET:
-				return new MidiInstrument(instr.get(TRUMPET), "Tru", type, volume);
-			case TENOR_SAX:
-				return new MidiInstrument(instr.get(TENOR_SAX),
-						"TSax", type, volume);
-			case XYLOPHONE:
-				return new MidiInstrument(instr.get(XYLOPHONE), "Xyl", type, volume);
-			default:
-				return new MidiInstrument("Unnamed", "Unn", type, volume);
+		if (instruments == null) {
+			getInstruments();
 		}
+		for (MidiInstrument inst : instruments) {
+			if (inst.getMidiProgram() == type) {
+				return new MidiInstrument(inst.getName(),
+						inst.getShortName(), type, volume);
+			}
+		}
+		return new MidiInstrument("Unnamed", "Unn", type, volume);
 	}
 
-	public static Map<Integer, String> getInstruments() {
-		if (instruments.size() == 0) {
-			instruments.put(26, "Acoustic Guitar");
-			instruments.put(26, "Acoustic Bass");
-			instruments.put(26, "Cello");
-			instruments.put(26, "Flute");
-			instruments.put(26, "Organ");
-			instruments.put(26, "Piano");
-			instruments.put(26, "Tenor Saxophone");
-			instruments.put(26, "Trumpet");
-			instruments.put(26, "Xylophone");
+	public static MidiInstrument[] getInstruments() {
+		if (instruments == null) {
+			instruments = new MidiInstrument[9];
+			instruments[0] = new MidiInstrument(
+					"Acoustic Bass", "Bass", ACOUSTIC_BASS, 100);
+			instruments[1] = new MidiInstrument(
+					"Acoustic Guitar", "Guit", ACOUSTIC_GUITAR, 100);
+			instruments[2] = new MidiInstrument(
+					"Cello", "Cell", CELLO, 100);
+			instruments[3] = new MidiInstrument(
+					"Flute", "Flut", FLUTE, 100);
+			instruments[4] = new MidiInstrument(
+					"Organ", "Orga", ORGAN, 100);
+			instruments[5] = new MidiInstrument(
+					"Piano", "Pian", PIANO, 100);
+			instruments[6] = new MidiInstrument(
+					"Trumpet", "Trum", TRUMPET, 100);
+			instruments[7] = new MidiInstrument(
+					"Tenor Saxophone", "TSax", TENOR_SAX, 100);
+			instruments[8] = new MidiInstrument(
+					"Xylophone", "Xylo", XYLOPHONE, 100);
 		}
 		return instruments;
 	}
@@ -105,8 +101,8 @@ public class MidiInstrument {
 	@Override
 	public String toString() {
 		return String.format(
-				"Instrument: {%s (%s); Midi-Program: %d, Volume: %f}",
-				name, shortName, midiProgram, volume
+				"Instrument: {%s (%s); Midi-Program: %d, Volume: %d}",
+				name, shortName, midiProgram, (int) volume
 		);
 	}
 }
