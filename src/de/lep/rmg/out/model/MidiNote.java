@@ -1,43 +1,40 @@
 package de.lep.rmg.out.model;
 
+import de.lep.rmg.gen.model.SequenceNote;
+import de.lep.rmg.gen.model.SimpleNote;
+
 /**
  * @author paul
  * @since 29.12.17.
  */
-public class MidiNote {
+public class MidiNote extends SequenceNote {
 
-	private int start, duration;
-	private int pitch;
-	private float volume;
+	protected int start;
 
 
-	public MidiNote(int start, int duration, int pitch, float volume) {
+	public MidiNote(int pitch, float volume, int start, int duration) {
+		super(pitch, volume, duration);
 		this.start = start;
-		this.duration = duration;
-		this.pitch = pitch;
-		this.volume = volume;
 	}
 
-	public MidiNote(int start, int duration, int pitch) {
+	public MidiNote(int pitch, int start, int duration) {
+		super(pitch, duration);
 		this.start = start;
-		this.duration = duration;
-		this.pitch = pitch;
-		this.volume = 100f;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
 	}
 
 	public int getStart() {
 		return start;
 	}
 
-	public int getDuration() {
-		return duration;
-	}
-
-	public int getPitch() {
-		return pitch;
-	}
-
-	public float getVolume() {
-		return volume;
+	@Override
+	public String toString() {
+		return "MidiNote{" +
+				"start=" + start +
+				", duration=" + duration +
+				'}';
 	}
 }
