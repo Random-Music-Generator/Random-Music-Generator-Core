@@ -28,6 +28,10 @@ public class SequenceNote extends SimpleNote {
 	public MidiNote convert2Midi(int start) {
 		return new MidiNote(pitch, volume, start, duration);
 	}
+	
+	public int getDuration(){
+		return duration;
+	}
 
 	@Override
 	public String toString() {

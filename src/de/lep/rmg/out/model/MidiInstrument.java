@@ -1,8 +1,5 @@
 package de.lep.rmg.out.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author paul
  * @since 29.12.17.

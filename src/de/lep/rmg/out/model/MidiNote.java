@@ -1,7 +1,6 @@
 package de.lep.rmg.out.model;
 
 import de.lep.rmg.gen.model.SequenceNote;
-import de.lep.rmg.gen.model.SimpleNote;
 
 /**
  * @author paul
